@@ -31,6 +31,11 @@ blocks:
           - cd src
           - 'cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod),vendor-$SEMAPHORE_GIT_BRANCH,vendor-master'
       jobs:
-        - name: test
+        - name: Test
           commands:
             - go test ./...
+promotions:
+  - name: Dockerize
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
